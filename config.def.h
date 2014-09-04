@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+#include <xosd.h>
+#include <stdbool.h>
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -94,6 +97,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,                            XK_Caps_Lock, capswarn,    {0} },
 };
 
 /* button definitions */
@@ -112,4 +116,71 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+
+#define NLINES 15
+
+/*
+"   _                   _   ",
+" _( )                 ( )_ ",
+"(_, |      __ __      | ,_)",
+"   \'\    /  ^  \    /'/   ",
+"    '\'\,/\      \,/'/'    ",
+"      '\| []   [] |/'      ",
+"        (_  /^\  _)        ",
+"          \  ~  /          ",
+"          /HHHHH\          ",
+"        /'/{^^^}\'\        ",
+"    _,/'/'  ^^^  '\'\,_    ",
+"   (_, |           | ,_)   ",
+"     (_)           (_)     ",
+"                           ",
+"       CAPS LOCK !!!       "
+*/
+static char* skull[NLINES] = {
+"   _                   _   ",
+" _( )                 ( )_ ",
+"(_, |      __ __      | ,_)",
+"   \\'\\    /  ^  \\    /'/   ",
+"    '\\'\\,/\\      \\,/'/'    ",
+"      '\\| []   [] |/'      ",
+"        (_  /^\\  _)        ",
+"          \\  ~  /          ",
+"          /HHHHH\\          ",
+"        /'/{^^^}\\'\\        ",
+"    _,/'/'  ^^^  '\\'\\,_    ",
+"   (_, |           | ,_)   ",
+"     (_)           (_)     ",
+"                           ",
+"       CAPS LOCK !!!       "
+};
+
+
+static bool capson = false;
+static xosd* osd = NULL;
+
+void
+capswarn(const Arg *arg) {
+  capson = !capson;
+
+  if (capson) {
+    setlocale(LC_ALL, "");
+    osd = xosd_create(NLINES);
+    if (osd == NULL) {
+      perror("could not create \"osd\"");
+      return;
+    }
+
+    xosd_set_font(osd, "-*-terminus-bold-r-*-*-32-*-*-*-*-*-*-*");
+    xosd_set_colour(osd, "#FF0000");
+    xosd_set_pos(osd, XOSD_middle);
+    xosd_set_align(osd, XOSD_center);
+
+    for (int i = 0; i < NLINES; i += 1) {
+      xosd_display(osd, i, XOSD_string, skull[i]);
+    }
+  } else if (osd != NULL) {
+    xosd_destroy(osd);
+    osd = NULL;
+  }
+}
 
