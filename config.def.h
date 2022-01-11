@@ -23,8 +23,8 @@ static const char *upvol[]   = { "/usr/bin/amixer", "-c", "1", "-q", "sset", "Ma
 static const char *downvol[]   = { "/usr/bin/amixer", "-c", "1", "-q", "sset", "Master", "5%-", "unmute", NULL };
 static const char *mutevol[] = { "/usr/bin/amixer", "-c", "1", "-D", "pulse", "set", "Master", "toggle",  NULL };
 static const char
-	*light_up[] = {"/usr/bin/xbacklight", "-inc", "5", NULL},
-	*light_down[] = {"/usr/bin/xbacklight", "-dec", "5", NULL};
+	*light_up[] = {"/usr/bin/xbacklight", "-inc", "8", NULL},
+	*light_down[] = {"/usr/bin/xbacklight", "-dec", "8", NULL};
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -69,7 +69,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "gnome-terminal", NULL };
+static const char *termcmd[]  = { "konsole", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
