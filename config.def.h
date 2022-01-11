@@ -18,6 +18,14 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
 };
 
+#include <X11/XF86keysym.h>
+static const char *upvol[]   = { "/usr/bin/amixer", "-c", "1", "-q", "sset", "Master", "5%+", "unmute", NULL };
+static const char *downvol[]   = { "/usr/bin/amixer", "-c", "1", "-q", "sset", "Master", "5%-", "unmute", NULL };
+static const char *mutevol[] = { "/usr/bin/amixer", "-c", "1", "-D", "pulse", "set", "Master", "toggle",  NULL };
+static const char
+	*light_up[] = {"/usr/bin/xbacklight", "-inc", "5", NULL},
+	*light_down[] = {"/usr/bin/xbacklight", "-dec", "5", NULL};
+
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
@@ -100,6 +108,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+  { 0,                       XF86XK_MonBrightnessUp,			spawn,			{.v = light_up}},
+	{ 0,                       XF86XK_MonBrightnessDown,			spawn,			{.v = light_down}},
 };
 
 /* button definitions */
