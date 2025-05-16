@@ -23,8 +23,8 @@ static const char *upvol[]   = { "/usr/bin/amixer", "-c", "1", "-q", "sset", "Ma
 static const char *downvol[]   = { "/usr/bin/amixer", "-c", "1", "-q", "sset", "Master", "5%-", "unmute", NULL };
 static const char *mutevol[] = { "/usr/bin/amixer", "-c", "1", "-D", "pulse", "set", "Master", "toggle",  NULL };
 static const char
-	*light_up[] = {"/usr/bin/xbacklight", "-inc", "8", NULL},
-	*light_down[] = {"/usr/bin/xbacklight", "-dec", "8", NULL};
+	*light_up[] = {"/usr/bin/light", "-A", "8", NULL},
+	*light_down[] = {"/usr/bin/light", "-U", "8", NULL};
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
